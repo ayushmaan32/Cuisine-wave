@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import LandingImage from "@/components/LandingImage";
 
@@ -13,6 +14,7 @@ const Layouts: React.FC<layoutsProps> = ({ children }) => {
       <Header />
       <LandingImage />
       <div className="container mx-auto flex-1 py-10">{children}</div>
+      <Footer />
     </div>
   );
 };

@@ -9,9 +9,9 @@ import appDownloadImg from "../assets/mobileimg.png";
 const Homepage: React.FC = () => {
   return (
     <div className="flex flex-col gap-12">
-      <div className="flex flex-col rounded-lg shadow-md bg-white py-8 text-center gap-5 -mt-20">
+      <div className="flex flex-col rounded-lg shadow-md bg-white py-8 text-center gap-5 -mt-20 ">
         <h1 className="font-bold text-orange-600 text-5xl tracking-tight">
-          Tuck into a takeway today
+          Tuck into a takeaway today
         </h1>
         <span className="text-xl text-orange-300">
           Food is just a click away
