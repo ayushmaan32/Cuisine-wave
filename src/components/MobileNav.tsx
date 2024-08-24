@@ -10,8 +10,10 @@ import {
 import { Button } from "./ui/button";
 import { Menu } from "lucide-react";
 import { Separator } from "./ui/separator";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const MobileNav: React.FC = () => {
+  const { loginWithRedirect } = useAuth0();
   return (
     <Sheet>
       <SheetTrigger>
@@ -23,7 +25,10 @@ const MobileNav: React.FC = () => {
           <Separator />
           <SheetDescription className="flex justify-center">
             <div className="space-y-2    ">
-              <Button className="flex-1  font-bold bg-orange-500">
+              <Button
+                className="flex-1  font-bold bg-orange-500"
+                onClick={async () => await loginWithRedirect()}
+              >
                 Log in
               </Button>
             </div>
