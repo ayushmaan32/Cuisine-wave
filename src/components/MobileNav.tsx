@@ -8,30 +8,43 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "./ui/button";
-import { Menu } from "lucide-react";
+import { CircleUserRound, Menu } from "lucide-react";
 import { Separator } from "./ui/separator";
 import { useAuth0 } from "@auth0/auth0-react";
+import MobileNavLinks from "./MobileNavLinks";
+// import { Link } from "react-router-dom";
 
 const MobileNav: React.FC = () => {
-  const { loginWithRedirect } = useAuth0();
+  const { loginWithRedirect, isAuthenticated, user } = useAuth0();
   return (
     <Sheet>
       <SheetTrigger>
         <Menu className="text-orange-500" />
       </SheetTrigger>
+      <SheetTitle>
+        {isAuthenticated ? (
+          <span className="flex items-center font-bold gap-2">
+            <CircleUserRound className="text-orange-500" />
+            {user?.email}
+          </span>
+        ) : (
+          <span> Welcome to Cusine Wave</span>
+        )}
+      </SheetTitle>
       <SheetContent className="space-y-3">
         <SheetHeader>
-          <SheetTitle>Welcome to Cuisine Wave</SheetTitle>
           <Separator />
           <SheetDescription className="flex justify-center">
-            <div className="space-y-2    ">
+            {isAuthenticated ? (
+              <MobileNavLinks />
+            ) : (
               <Button
-                className="flex-1  font-bold bg-orange-500"
-                onClick={async () => await loginWithRedirect()}
+                onClick={() => loginWithRedirect()}
+                className="flex-1 font-bold bg-orange-500"
               >
-                Log in
+                Log In
               </Button>
-            </div>
+            )}
           </SheetDescription>
         </SheetHeader>
       </SheetContent>
