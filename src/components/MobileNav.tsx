@@ -21,20 +21,21 @@ const MobileNav: React.FC = () => {
       <SheetTrigger>
         <Menu className="text-orange-500" />
       </SheetTrigger>
-      <SheetTitle>
-        {isAuthenticated ? (
-          <span className="flex items-center font-bold gap-2">
-            <CircleUserRound className="text-orange-500" />
-            {user?.email}
-          </span>
-        ) : (
-          <span> Welcome to Cusine Wave</span>
-        )}
-      </SheetTitle>
+
       <SheetContent className="space-y-3">
         <SheetHeader>
+          <SheetTitle>
+            {isAuthenticated ? (
+              <span className="flex items-center font-bold gap-2">
+                <CircleUserRound className="text-orange-500" />
+                {user?.email}
+              </span>
+            ) : (
+              <span> Welcome to Cusine Wave</span>
+            )}
+          </SheetTitle>
           <Separator />
-          <SheetDescription className="flex justify-center">
+          <SheetDescription className="flex flex-col gap-3">
             {isAuthenticated ? (
               <MobileNavLinks />
             ) : (
