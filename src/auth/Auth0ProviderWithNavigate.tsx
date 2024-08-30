@@ -12,8 +12,9 @@ const Auth0ProviderWithNavigate = ({
   const domain = import.meta.env.VITE_AUTH0_DOMAIN;
   const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
   const redirecturi = import.meta.env.VITE_AUTH0_CALLBACK_URL;
+  const audience = import.meta.env.VITE_AUTH0_AUDIENCE;
 
-  if (!domain || !clientId || !redirecturi) {
+  if (!domain || !clientId || !redirecturi || !audience) {
     throw new Error("unable to initalize the auth");
   }
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ const Auth0ProviderWithNavigate = ({
       clientId={clientId}
       authorizationParams={{
         redirect_uri: redirecturi,
+        audience,
       }}
       onRedirectCallback={onRedirectCallback}
     >
