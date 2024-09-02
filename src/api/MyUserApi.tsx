@@ -1,7 +1,50 @@
+import { MyUserApiType } from "@/types/types";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+export const useGetMyCurrentUser = () => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  const MyCurrentUser = async (): Promise<MyUserApiType> => {
+    const token = await getAccessTokenSilently();
+
+    const response = await fetch(`${API_BASE_URL}/api/my/user`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Error in Fetching using current user");
+    }
+    return response.json();
+  };
+
+  const {
+    data: currentUser,
+    error,
+    isError,
+    isLoading,
+  } = useQuery({
+    queryKey: ["fetchCurrentuser"],
+    queryFn: MyCurrentUser,
+  });
+
+  if (error) {
+    toast.error(error.toString());
+  }
+
+  return {
+    currentUser,
+    isError,
+    isLoading,
+  };
+};
 
 type MyUserApi = {
   auth0Id: string;
@@ -67,7 +110,6 @@ export const useUpdateMyUser = () => {
   };
 
   const {
-    isError,
     error,
     isSuccess,
     isPending,
@@ -77,8 +119,15 @@ export const useUpdateMyUser = () => {
     mutationFn: UpdateMyUser,
   });
 
+  if (isSuccess) {
+    toast.success("Updated Successfully");
+  }
+
+  if (error) {
+    toast.error(error.toString());
+    reset();
+  }
   return {
-    isError,
     error,
     isSuccess,
     isPending,
