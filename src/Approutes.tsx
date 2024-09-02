@@ -4,6 +4,7 @@ import Layouts from "./layouts/Layouts";
 import Homepage from "./pages/Homepage";
 import AuthCallbackPage from "./pages/AuthCallbackPage";
 import UserProfilePage from "./pages/UserProfilePage";
+import ProtectedRoutes from "./auth/ProtectedRoutes";
 
 // type ApproutesProps = {};
 
@@ -19,14 +20,17 @@ const Approutes: React.FC = () => {
         }
       />
       <Route path="/auth-callback" element={<AuthCallbackPage />} />
-      <Route
-        path="/user-profile"
-        element={
-          <Layouts>
-            <UserProfilePage />
-          </Layouts>
-        }
-      />
+
+      <Route element={<ProtectedRoutes />}>
+        <Route
+          path="/user-profile"
+          element={
+            <Layouts>
+              <UserProfilePage />
+            </Layouts>
+          }
+        />
+      </Route>
       <Route path="*" element={<Navigate to={"/"} />} />
     </Routes>
   );
